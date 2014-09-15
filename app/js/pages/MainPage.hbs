@@ -1,0 +1,23 @@
+<div class="text-muted">
+	<small>
+		{{T "User:"}}
+		<b>{{#if login}}{{login.user}}{{else}}{{T "Not logged in"}}{{/if}}</b>
+		{{T "Sync:"}} 
+		<span class="text-{{dataSyncClass}}">{{dataSyncText}}</span>
+		{{#if lastSyncDate}}<b>{{timeago lastSyncDate}}</b>{{/if}}
+		<span id="upserts_pending"></span>
+		<span id="images_pending"></span>
+		{{T "Version:"}} <b>{{version}} {{#if baseVersion}}({{baseVersion}}){{/if}}</b>
+	</small>
+</div>
+
+{{#if outdated}}
+	<div class="alert alert-warning">{{T "Your app is out of date. Please update in Google Play store."}}</div>
+{{/if}}
+
+
+<button type="button" id="report_possible_case" class="btn btn-block button-primary">{{T "Report Possible Case"}}</button>
+<br>
+<button type="button" id="report_death" class="btn btn-block button-danger">{{T "Report Death"}}</button>
+<br>
+<button type="button" id="report_need" class="btn btn-block button-need">{{T "Report a Need"}}</button>

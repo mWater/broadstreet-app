@@ -1,6 +1,6 @@
 Page = require "../Page"
 context = require '../context'
-SiteMapPage = require './SiteMapPage'
+MainPage = require './MainPage'
 utils = require './utils'
 
 module.exports = class SignupPage extends Page
@@ -66,7 +66,7 @@ module.exports = class SignupPage extends Page
 
   login: (username, password) ->
     success = =>
-      @pager.closeAllPages(SiteMapPage)
+      @pager.closeAllPages(MainPage)
       @pager.flash T("Login as {0} successful", username), "success"
 
     error = =>

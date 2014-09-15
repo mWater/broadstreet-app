@@ -10,6 +10,7 @@ bowser = require 'bowser'
 
 LoginPage = require './pages/LoginPage'
 SiteMapPage = require './pages/SiteMapPage'
+MainPage = require './MainPage'
 
 AppUpdater = require './AppUpdater'
 
@@ -135,7 +136,7 @@ exports.start = (options = {}) ->
           pager.openPage(SiteMapPage)
         # If logged in, open main page
         else if ctx.login?
-          pager.openPage(SiteMapPage)
+          pager.openPage(MainPage)
         else
           pager.openPage(LoginPage)
 
