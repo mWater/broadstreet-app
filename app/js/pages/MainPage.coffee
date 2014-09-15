@@ -108,10 +108,17 @@ class MainPage extends Page
   reportNeed: -> @startSurvey("ef7cbe23b8f04c66ae64a307f126e641")
 
   startSurvey: (formId) ->
-    form = @db.forms.findOne { _id: formId }, (form) =>
+    gotForm = (form) =>
       if not form
         @error(T("Form not found"))
         return
+
+      # Add demo to deploy if in demo mode
+      if @login.user == "demo"
+        deployment = form.deployments[0]
+        if not ("user:demo" in deployment.enumerators)
+          deployment.enumerators.push "user:demo"
+          @db.forms.upsert(form)
 
       response = {}
       responseModel = new ResponseModel(response, form, @login.user, @login.groups) 
@@ -120,6 +127,11 @@ class MainPage extends Page
       @db.responses.upsert response, (response) =>
         @pager.openPage(SurveyPage, {_id: response._id, mode: "new"})
       , @error
+
+    gotForm = _.once(gotForm)
+
+    form = @db.forms.findOne { _id: formId }, (form) =>
+      gotForm(form)
     , @error
     
 module.exports = MainPage

@@ -12,6 +12,7 @@ exports.login = (username, password, ctx, success, error) ->
       username: username
       password: password
       version: @version
+      domain: "Broadstreet Ebola"
     }),
     contentType : 'application/json',
     type : 'POST'})
