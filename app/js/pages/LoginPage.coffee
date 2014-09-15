@@ -35,7 +35,7 @@ module.exports = class LoginPage extends Page
       if @options.afterLogin
         @options.afterLogin()
       else
-        @pager.closeAllPage(MainPage)
+        @pager.closeAllPages(MainPage)
       @pager.flash T("Login as {0} successful", username), "success"
 
     error = =>
