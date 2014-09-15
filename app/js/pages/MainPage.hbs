@@ -18,8 +18,15 @@
 <div class="well well-lg">
 	<h1>Welcome to Broadstreet</h1>
 	<p><em>Broadstreet is a digital epidemiology tool for reporting symptoms and other needs for communities impacted by Ebola.</em></p>
-	<p>Use the buttons below to create reports</p>
+	<p>Use the buttons below to create reports.</p>
 </div>
+
+{{#if demo}}
+<div class="alert alert-danger" role="alert">
+  Running in Demo mode. No changes will be saved
+  <button id="logout" type="button" class="btn btn-default">Leave Demo Mode</button>
+</div>
+{{/if}}
 
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-4">

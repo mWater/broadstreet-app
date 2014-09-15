@@ -9,12 +9,15 @@ SiteListPage = require("./SiteListPage")
 SiteMapPage = require("./SiteMapPage")
 ResponseModel = require('mwater-common').ResponseModel
 SurveyPage = require "./SurveyPage"
+login = require '../login'
+context = require '../context'
 
 class MainPage extends Page
   events:
     "click #report_possible_case" : "reportPossibleCase"
     "click #report_death" : "reportDeath"
     "click #report_need" : "reportNeed"
+    "click #logout": "logout"
 
   activate: ->
     @setTitle "Broadstreet"
@@ -81,6 +84,7 @@ class MainPage extends Page
       dataSyncText: dataSyncText
       dataSyncClass: dataSyncClass
       outdated: outdated
+      demo: @login and @login.user == "demo"
     }
 
     @$el.html require('./MainPage.hbs')(data)
@@ -102,6 +106,15 @@ class MainPage extends Page
         else
           $("#images_pending").html("")
       , @error
+
+  logout: ->
+    login.setLogin(null)
+    
+    # Update context, first stopping old one
+    @ctx.stop()
+    context.createAnonymousContext (ctx) =>
+      _.extend @ctx, ctx
+      @pager.closePage(require("./MainPage"))
 
   reportPossibleCase: -> @loginAndStartSurvey("dd909cb39f544ff7b5cdce6951b6a63f")
   reportDeath: -> @loginAndStartSurvey("f4b712bf0643456cb8dcd7b96c7dfd3c")
