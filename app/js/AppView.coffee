@@ -37,11 +37,12 @@ class AppView extends Backbone.View
     # Set title and back button
     @$("#navbar_back_button").toggle(@pager.multiplePages())
     title = @pager.getTitle()
+    # Ignore title TODO
+    @$("#navbar_title").text(T("Broadstreet"))
 
-    # Show brand logo if no title
-    @$("#brand_logo").toggle(not @pager.multiplePages())
-    @$("#navbar_title").toggle(@pager.multiplePages())
-    @$("#navbar_title").text(@pager.getTitle())
+    # # Show brand logo if no title
+    # @$("#brand_logo").toggle(not title)
+    # @$("#navbar_title").toggle(title)
 
     # Hide slide menu if multiple pages
     @$("#navbar_slidemenu_button").toggle(not @pager.multiplePages())

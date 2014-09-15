@@ -208,9 +208,9 @@
       "_base": "en"
     },
     {
-      "en": "Loading mWater...",
-      "es": "Cargando mWater...",
-      "sw": "mWater inafunguka...",
+      "en": "Loading Broadstreet...",
+      "es": "Cargando Broadstreet...",
+      "sw": "Broadstreet inafunguka...",
       "_base": "en"
     },
     {
@@ -996,9 +996,9 @@
       "_base": "en"
     },
     {
-      "en": "Login to mWater",
-      "es": "Iniciar sesión en mWater",
-      "sw": "Ingia mWater",
+      "en": "Login to Broadstreet",
+      "es": "Iniciar sesión en Broadstreet",
+      "sw": "Ingia Broadstreet",
       "_base": "en"
     },
     {
@@ -1056,9 +1056,9 @@
       "_base": "en"
     },
     {
-      "en": "Signup with mWater",
-      "es": "Registrarse con mWater",
-      "sw": "Jisajili na mWater",
+      "en": "Signup with Broadstreet",
+      "es": "Registrarse con Broadstreet",
+      "sw": "Jisajili na Broadstreet",
       "_base": "en"
     },
     {
@@ -1721,7 +1721,7 @@
     },
     {
       "_base": "en",
-      "en": "Please update mWater App to use this form",
+      "en": "Please update Broadstreet App to use this form",
       "sw": ""
     },
     {
@@ -1731,7 +1731,7 @@
     },
     {
       "_base": "en",
-      "en": "Loading mWater App...",
+      "en": "Loading Broadstreet App...",
       "sw": ""
     },
     {
@@ -1954,7 +1954,7 @@
     },
     {
       "_base": "en",
-      "en": "Your app is out of date. Please update mWater App on Google Play",
+      "en": "Your app is out of date. Please update Broadstreet App on Google Play",
       "sw": ""
     },
     {

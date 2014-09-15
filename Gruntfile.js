@@ -285,7 +285,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-manifest');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-text-replace');
-  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-rework');
 
   grunt.registerTask('cordova_debug', ['copy:cordova_config', 'copy:cordova_www', 'copy:cordova_override_debug']);

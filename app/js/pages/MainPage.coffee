@@ -1,4 +1,5 @@
 Page = require("../Page")
+# TODO clean out
 NewSurveyPage = require("./NewSurveyPage")
 SurveyListPage = require("./SurveyListPage")
 TestListPage = require("./TestListPage")
@@ -6,6 +7,8 @@ NewTestPage = require("./NewTestPage")
 NewSitePage = require("./NewSitePage")
 SiteListPage = require("./SiteListPage")
 SiteMapPage = require("./SiteMapPage")
+ResponseModel = require('mwater-common').ResponseModel
+SurveyPage = require "./SurveyPage"
 
 class MainPage extends Page
   events:
@@ -14,7 +17,7 @@ class MainPage extends Page
     "click #report_need" : "reportNeed"
 
   activate: ->
-    @setTitle ""
+    @setTitle "Broadstreet"
 
     # Rerender on error/success of sync
     if @dataSync?
@@ -100,24 +103,23 @@ class MainPage extends Page
           $("#images_pending").html("")
       , @error
 
-
-  reportPossibleCase: -> startSurvey("dd909cb39f544ff7b5cdce6951b6a63f")
-  reportDeath: -> startSurvey("dd909cb39f544ff7b5cdce6951b6a63f")
-  reportNeed: -> startSurvey("dd909cb39f544ff7b5cdce6951b6a63f")
-
+  reportPossibleCase: -> @startSurvey("dd909cb39f544ff7b5cdce6951b6a63f")
+  reportDeath: -> @startSurvey("f4b712bf0643456cb8dcd7b96c7dfd3c")
+  reportNeed: -> @startSurvey("ef7cbe23b8f04c66ae64a307f126e641")
 
   startSurvey: (formId) ->
-    form = _.findWhere(@forms, { _id: formId })
-    if not form
-      @error(T("Form not found"))
-      return
+    form = @db.forms.findOne { _id: formId }, (form) =>
+      if not form
+        @error(T("Form not found"))
+        return
 
-    response = {}
-    responseModel = new ResponseModel(response, form, @login.user, @login.groups) 
-    responseModel.draft()
+      response = {}
+      responseModel = new ResponseModel(response, form, @login.user, @login.groups) 
+      responseModel.draft()
 
-    @db.responses.upsert response, (response) =>
-      @pager.closePage(SurveyPage, {_id: response._id, mode: "new"})
+      @db.responses.upsert response, (response) =>
+        @pager.openPage(SurveyPage, {_id: response._id, mode: "new"})
+      , @error
     , @error
     
 module.exports = MainPage

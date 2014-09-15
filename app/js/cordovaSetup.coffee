@@ -109,7 +109,7 @@ exports.setup = (options, success, error) ->
         # Redirect, putting base version 
         redir = launchUrl + "index_cordova.html?base_version=" + "//VERSION//"
         console.log "Redirecting to #{redir}"
-        $("body").html('<div class="alert alert-info">' + T("Loading mWater...") + '</div>')
+        $("body").html('<div class="alert alert-info">' + T("Loading Broadstreet...") + '</div>')
         window.location.href = redir
       , error
     , error

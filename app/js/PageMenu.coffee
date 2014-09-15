@@ -37,10 +37,10 @@ module.exports = class PageMenu extends Backbone.View
       @pager.closePage()
     @pager.closePage(page)
 
-  # gotoHome: ->
-  #   while @pager.multiplePages()
-  #     @pager.closePage()
-  #   @pager.closePage(require("./pages/MainPage"))
+  gotoHome: ->
+    while @pager.multiplePages()
+      @pager.closePage()
+    @pager.closePage(require("./pages/MainPage"))
 
   logout: ->
     login.setLogin(null)

@@ -75,7 +75,7 @@ class SurveyPage extends Page
       # Check schema version
       schema = @form.design._schema or 1
       if schema > mwaterforms.schemaVersion
-        alert(T("Please update mWater App to use this form"))
+        alert(T("Please update Broadstreet App to use this form"))
         return @pager.closePage()
 
       if schema < mwaterforms.minSchemaVersion
@@ -220,7 +220,10 @@ class SurveyPage extends Page
 
   close: ->
     @save()
-    @returnToSurveyList()
+    @returnHome()
+
+  returnHome: ->
+    @pager.closePage()
 
   returnToSurveyList: ->
     # Here to solve circularity bug
@@ -236,7 +239,7 @@ class SurveyPage extends Page
     @responseModel.submit()
 
     @db.responses.upsert @response, =>
-      @returnToSurveyList()
+      @returnHome()
 
       @pager.flash T("Survey completed successfully"), "success"
     , @error

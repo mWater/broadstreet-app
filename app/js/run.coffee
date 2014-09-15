@@ -10,7 +10,7 @@ bowser = require 'bowser'
 
 LoginPage = require './pages/LoginPage'
 SiteMapPage = require './pages/SiteMapPage'
-MainPage = require './MainPage'
+MainPage = require './pages/MainPage'
 
 AppUpdater = require './AppUpdater'
 
@@ -142,7 +142,7 @@ exports.start = (options = {}) ->
 
         # Determine if base app out of date
         if ctx.baseVersion and ctx.baseVersion.match(/^3\.[0-9]\./)
-          pager.flash(T("Your app is out of date. Please update mWater App on Google Play"), "warning", 10000)
+          pager.flash(T("Your app is out of date. Please update Broadstreet App on Google Play"), "warning", 10000)
 
     # Create context
     if options.demo  
