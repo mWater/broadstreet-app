@@ -66,7 +66,10 @@ module.exports = class SignupPage extends Page
 
   login: (username, password) ->
     success = =>
-      @pager.closeAllPages(MainPage)
+      if @options.afterLogin
+        @options.afterLogin()
+      else
+        @pager.closeAllPage(MainPage)
       @pager.flash T("Login as {0} successful", username), "success"
 
     error = =>

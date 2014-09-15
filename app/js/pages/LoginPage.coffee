@@ -32,7 +32,10 @@ module.exports = class LoginPage extends Page
 
   login: (username, password) ->
     success = =>
-      @pager.closeAllPages(MainPage)
+      if @options.afterLogin
+        @options.afterLogin()
+      else
+        @pager.closeAllPage(MainPage)
       @pager.flash T("Login as {0} successful", username), "success"
 
     error = =>
@@ -59,5 +62,9 @@ module.exports = class LoginPage extends Page
     context.createDemoContext (ctx) =>
       _.extend @ctx, ctx
 
-      @pager.closePage(MainPage)
+      if @options.afterLogin
+        @options.afterLogin()
+      else
+        @pager.closeAllPages(MainPage)
+
       @pager.flash T("Running in Demo mode. No changes will be saved"), "warning", 10000

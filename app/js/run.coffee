@@ -134,11 +134,9 @@ exports.start = (options = {}) ->
         # If explicit page
         if options.initialPage == "SiteMapPage"
           pager.openPage(SiteMapPage)
-        # If logged in, open main page
-        else if ctx.login?
-          pager.openPage(MainPage)
+        # Open main page
         else
-          pager.openPage(LoginPage)
+          pager.openPage(MainPage)
 
         # Determine if base app out of date
         if ctx.baseVersion and ctx.baseVersion.match(/^3\.[0-9]\./)

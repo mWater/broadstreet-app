@@ -299,5 +299,5 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy_demo', ['default', 'shell:deploy_demo']);
   grunt.registerTask('deploy_map', ['default', 'shell:deploy_map']);
   grunt.registerTask('deploy_app', ['shell:bump_version', 'default', 'shell:deploy_app']);
-  grunt.registerTask('deploy', ['deploy_app', 'shell:deploy_map']);
+  grunt.registerTask('deploy', ['deploy_app']);
 };

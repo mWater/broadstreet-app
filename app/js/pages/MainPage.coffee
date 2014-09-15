@@ -103,11 +103,24 @@ class MainPage extends Page
           $("#images_pending").html("")
       , @error
 
-  reportPossibleCase: -> @startSurvey("dd909cb39f544ff7b5cdce6951b6a63f")
-  reportDeath: -> @startSurvey("f4b712bf0643456cb8dcd7b96c7dfd3c")
-  reportNeed: -> @startSurvey("ef7cbe23b8f04c66ae64a307f126e641")
+  reportPossibleCase: -> @loginAndStartSurvey("dd909cb39f544ff7b5cdce6951b6a63f")
+  reportDeath: -> @loginAndStartSurvey("f4b712bf0643456cb8dcd7b96c7dfd3c")
+  reportNeed: -> @loginAndStartSurvey("ef7cbe23b8f04c66ae64a307f126e641")
 
-  startSurvey: (formId) ->
+  loginAndStartSurvey: (formId) ->
+    if @login?
+      @startSurvey(formId)
+    else
+      LoginPage = require './LoginPage'
+      @pager.openPage(LoginPage, { 
+        afterLogin: =>
+          # Remix in context
+          _.extend(this, @ctx) 
+          @pager.closeAllPages()
+          @startSurvey(formId)
+      })
+
+  startSurvey: (formId) =>
     gotForm = (form) =>
       if not form
         @error(T("Form not found"))

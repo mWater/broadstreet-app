@@ -107,7 +107,8 @@ class Pager extends Backbone.View
   closeAllPages: (replaceWith, options) ->
     while @multiplePages()
       @closePage()
-    @closePage(replaceWith, options)
+    if replaceWith
+      @closePage(replaceWith, options)
 
   # Gets page next down on the stack
   getParentPage: ->
