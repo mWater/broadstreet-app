@@ -207,54 +207,6 @@ module.exports = function(grunt) {
           failOnError: true
         }
       },
-      deploy_demo: {
-        command: 's3cmd sync --acl-public --guess-mime-type ' +
-          '--add-header "Cache-Control: no-cache, must-revalidate" ' +
-          '--add-header "Pragma: no-cache" ' +
-          '--add-header "Expires: 0" ' + 
-          '--add-header "Content-Encoding: gzip" '+
-          '* s3://demo.mwater.co',
-        options: {
-          stdout: true,
-          execOptions: {
-            cwd: 'dist.gz'
-          }
-        }
-      },
-      deploy_beta: {
-        command: 's3cmd sync --acl-public --guess-mime-type ' +
-          '--add-header "Cache-Control: no-cache, must-revalidate" ' +
-          '--add-header "Pragma: no-cache" ' +
-          '--add-header "Expires: 0" ' + 
-          '--add-header "Content-Encoding: gzip" '+
-          '* s3://beta.mwater.co',
-        options: {
-          stdout: true,
-          execOptions: {
-            cwd: 'dist.gz'
-          }
-        }
-      },      
-      deploy_map: {
-        command: ['s3cmd sync --acl-public --guess-mime-type ' +
-          '--add-header "Cache-Control: no-cache, must-revalidate" ' +
-          '--add-header "Pragma: no-cache" ' +
-          '--add-header "Expires: 0" ' + 
-          '--add-header "Content-Encoding: gzip" '+
-          '* s3://map.mwater.co',
-          's3cmd sync --acl-public --guess-mime-type ' +
-          '--add-header "Cache-Control: no-cache, must-revalidate" ' +
-          '--add-header "Pragma: no-cache" ' +
-          '--add-header "Expires: 0" ' + 
-          '--add-header "Content-Encoding: gzip" '+
-          '* s3://map.mwater.org'].join("&&"),
-        options: {
-          stdout: true,
-          execOptions: {
-            cwd: 'dist.gz'
-          }
-        }
-      },
       deploy_app: {
         command: [
           's3cmd sync --acl-public --guess-mime-type ' +
@@ -262,25 +214,13 @@ module.exports = function(grunt) {
           '--add-header "Pragma: no-cache" ' +
           '--add-header "Expires: 0" ' + 
           '--add-header "Content-Encoding: gzip" '+
-          '* s3://app.mwater.co',
+          '* s3://ebola.broadst.org',
           's3cmd put --acl-public --guess-mime-type ' +
           '--add-header "Cache-Control: no-cache, no-store, must-revalidate" ' +
           '--add-header "Pragma: no-cache" ' +
           '--add-header "Expires: 0" ' + 
           '--add-header "Content-Encoding: gzip" '+
-          'manifest.appcache s3://app.mwater.org',
-          's3cmd sync --acl-public --guess-mime-type ' +
-          '--add-header "Cache-Control: no-cache, must-revalidate" ' +
-          '--add-header "Pragma: no-cache" ' +
-          '--add-header "Expires: 0" ' + 
-          '--add-header "Content-Encoding: gzip" '+
-          '* s3://app.mwater.org',
-          's3cmd put --acl-public --guess-mime-type ' +
-          '--add-header "Cache-Control: no-cache, no-store, must-revalidate" ' +
-          '--add-header "Pragma: no-cache" ' +
-          '--add-header "Expires: 0" ' + 
-          '--add-header "Content-Encoding: gzip" '+
-          'manifest.appcache s3://app.mwater.org'
+          'manifest.appcache s3://ebola.broadst.org'
         ].join('&&'),
         options: {
           stdout: true,

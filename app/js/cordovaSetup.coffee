@@ -11,10 +11,10 @@ getQueryParameterByName = (name) ->
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
 
 # Where to store updated versions in local disk
-cachePath = "Android/data/co.mwater.clientapp/updates"
+cachePath = "Android/data/org.broadst.ebola/updates"
 
 # Where to pull updates from
-updateUrl = "http://app.mwater.co/"
+updateUrl = "http://ebola.broadst.org/"
 
 createAppUpdater = (baseUrl, success, error) ->
   window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs) ->

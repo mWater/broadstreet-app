@@ -6,7 +6,7 @@ createId = ->
    )
 
 
-# cachePath: e.g. "Android/data/co.mwater.clientapp/images" 
+# cachePath: e.g. "Android/data/<url reversed>/images" 
 # apiUrl: e.g. http://api.mwater.co/v3/
 # client: client id for uploading
 # fileTransfer: FileTransfer instance

@@ -228,7 +228,7 @@ exports.createLoginContext = (login, success) ->
   createDb login, (db) =>
     if persistentFs
       fileTransfer = new FileTransfer()
-      imageManager = new CachedImageManager(persistentFs, apiUrl, "Android/data/co.mwater.clientapp/images", login.client, fileTransfer)  
+      imageManager = new CachedImageManager(persistentFs, apiUrl, "Android/data/org.broadst.ebola/images", login.client, fileTransfer)  
     else
       imageManager = new SimpleImageManager(apiUrl)
 
