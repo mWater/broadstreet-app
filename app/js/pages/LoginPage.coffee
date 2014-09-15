@@ -67,4 +67,4 @@ module.exports = class LoginPage extends Page
       else
         @pager.closeAllPages(MainPage)
 
-      @pager.flash T("Running in Demo mode. No changes will be saved"), "warning", 10000
+      @pager.flash T("Running in Demo mode. No changes will be saved"), "warning", 3600*24*365
