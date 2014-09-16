@@ -54,6 +54,8 @@ exports.start = (options = {}) ->
   else if browser.msie 
     if browser.version < 10
       unsupportedBrowser = true
+  else if browser.safari
+    # OK
   else if browser.ios
     # TODO Check iOS specific
   else if browser.android

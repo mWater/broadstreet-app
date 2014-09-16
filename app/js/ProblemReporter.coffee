@@ -58,8 +58,12 @@ ProblemReporter = (url, version, getLogin) ->
     # Get text of message
     text = "window.onerror: #{message} at #{file}:#{line}:#{column}"
 
-    # Put up alert instead of old action
-    alert T("Internal Error") + "\n" + text
+    # Polite message for Safari QuotaExceededError
+    if text.match(/QuotaExceededError/)
+      alert T("Your browser is refusing to store data for offline use. Please check that not in private browsing mode and reload page.")
+    else
+      # Put up alert instead of old action
+      alert T("Internal Error") + "\n" + text
 
     # Add stack
     if errorObj?
