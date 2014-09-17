@@ -164,7 +164,8 @@ class SiteMapPage extends Page
     if center
       @map.setView(center, zoom)
     else
-      @map.fitWorld()
+      # Zoom to Monrovia, Liberia
+      @map.setView(new L.LatLng(6.3376,-10.7275), 12)
 
     if @options.setLocation
       new LocationSetter(@map, (newLoc) =>
