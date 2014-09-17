@@ -220,7 +220,19 @@ module.exports = function(grunt) {
           '--add-header "Pragma: no-cache" ' +
           '--add-header "Expires: 0" ' + 
           '--add-header "Content-Encoding: gzip" '+
-          'manifest.appcache s3://ebola.broadst.org'
+          'manifest.appcache s3://ebola.broadst.org',
+          's3cmd sync --acl-public --guess-mime-type ' +
+          '--add-header "Cache-Control: no-cache, must-revalidate" ' +
+          '--add-header "Pragma: no-cache" ' +
+          '--add-header "Expires: 0" ' + 
+          '--add-header "Content-Encoding: gzip" '+
+          '* s3://ebola-broadst-org',
+          's3cmd put --acl-public --guess-mime-type ' +
+          '--add-header "Cache-Control: no-cache, no-store, must-revalidate" ' +
+          '--add-header "Pragma: no-cache" ' +
+          '--add-header "Expires: 0" ' + 
+          '--add-header "Content-Encoding: gzip" '+
+          'manifest.appcache s3://ebola-broadst-org'
         ].join('&&'),
         options: {
           stdout: true,
