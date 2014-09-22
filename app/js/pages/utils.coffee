@@ -27,7 +27,12 @@ exports.login = (username, password, ctx, success, error) ->
     ctx.stop()
     context.createLoginContext response, (newctx) =>
       _.extend ctx, newctx
-      success()
+
+      # Update groups
+      ctx.db.groups.find({ members: login.user }, { fields: { groupname: 1 }, mode: "remote" }).fetch (groupDocs) ->
+        ctx.login.groups = _.pluck(groupDocs, "groupname")
+        success()
+      , ctx.error
 
   req.fail (jqXHR, textStatus, errorThrown) =>
     console.error "Login failure: #{jqXHR.responseText} (#{jqXHR.status})"
