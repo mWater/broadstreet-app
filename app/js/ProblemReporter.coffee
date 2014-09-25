@@ -60,7 +60,7 @@ ProblemReporter = (url, version, getLogin) ->
 
     # Polite message for Safari QuotaExceededError
     if text.match(/QuotaExceededError/)
-      alert T("Your browser is refusing to store data for offline use. Please check that not in private browsing mode and reload page.")
+      alert T("Your browser is refusing to store data for offline use. Please check that cookies are enabled and that you are not in private browsing mode, then reload the page.")
     else
       # Put up alert instead of old action
       alert T("Internal Error") + "\n" + text
