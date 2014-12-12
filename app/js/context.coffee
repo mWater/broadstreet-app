@@ -31,6 +31,7 @@ TODO should any items be null of context?
 
 async = require 'async'
 minimongo = require 'minimongo'
+loginUtils = require './login'
 
 SimpleImageManager = require './images/SimpleImageManager'
 CachedImageManager = require './images/CachedImageManager'
@@ -232,71 +233,63 @@ exports.createLoginContext = (login, success) ->
     else
       imageManager = new SimpleImageManager(apiUrl)
 
-    withGroups = (groups) =>
-      groups = _.pluck(groups, "groupname")
+    auth = new authModule.UserAuth(login.user, login.groups)
+    siteCodesManager = new siteCodes.SiteCodesManager(apiUrl + "site_codes?client=#{login.client}")
+    dataSync = new syncModule.DataSync(db, siteCodesManager)
+    imageSync = new syncModule.ImageSync(imageManager)
 
-      # Store in login
-      login.groups = groups
+    # Start synchronizing
+    dataSync.start(30*1000)  # Every 30 seconds
+    imageSync.start(30*1000)  # Every 30 seconds
 
-      auth = new authModule.UserAuth(login.user, login.groups)
-      siteCodesManager = new siteCodes.SiteCodesManager(apiUrl + "site_codes?client=#{login.client}")
-      dataSync = new syncModule.DataSync(db, siteCodesManager)
-      imageSync = new syncModule.ImageSync(imageManager)
+    # Perform sync immediately
+    dataSync.perform()
+    imageSync.perform()
 
-      # Start synchronizing
-      dataSync.start(30*1000)  # Every 30 seconds
-      imageSync.start(30*1000)  # Every 30 seconds
+    stop = ->
+      dataSync.stop()
+      imageSync.stop()
 
-      # Perform sync immediately
-      dataSync.perform()
-      imageSync.perform()
+    baseContext = createBaseContext()
 
-      stop = ->
-        dataSync.stop()
-        imageSync.stop()
-
-      baseContext = createBaseContext()
-
-      # Create image acquirer with camera and imageManager if persistentFs and camera
-      if baseContext.camera? and persistentFs
-        imageAcquirer = {
-          acquire: (success, error) ->
-            baseContext.camera.takePicture (url) ->
-              # Add image
-              imageManager.addImage url, (id) =>
-                success(id)
-            , (err) ->
-              alert(T("Failed to take picture"))
-        }
-      else 
-        # Use ImageUploader
-        imageAcquirer = {
-          acquire: (success, error) ->
-            ImageUploader.acquire(apiUrl, login.client, success, error) 
-        }
-
-      # Add function to asynchronously update groups list TODO add callback when minimongo supports final results
-      updateGroupsList = () ->
-        db.groups.find({ members: login.user }, { fields: { groupname: 1 } }).fetch (groupDocs) ->
-          login.groups = _.pluck(groupDocs, "groupname")
-        , error
-
-      ctx = _.extend baseContext, {
-        db: db 
-        imageManager: imageManager
-        auth: auth
-        login: login
-        siteCodesManager: siteCodesManager
-        dataSync: dataSync
-        imageSync: imageSync
-        stop: stop
-        imageAcquirer: imageAcquirer
-        updateGroupsList: updateGroupsList
+    # Create image acquirer with camera and imageManager if persistentFs and camera
+    if baseContext.camera? and persistentFs
+      imageAcquirer = {
+        acquire: (success, error) ->
+          baseContext.camera.takePicture (url) ->
+            # Add image
+            imageManager.addImage url, (id) =>
+              success(id)
+          , (err) ->
+            alert(T("Failed to take picture"))
       }
-      success(ctx)
+    else 
+      # Use ImageUploader
+      imageAcquirer = {
+        acquire: (success, error) ->
+          ImageUploader.acquire(apiUrl, login.client, success, error) 
+      }
 
-    # Only get groups once (TODO replace this when minimongo supports queries that return single authoritative results)
-    withGroups = _.once(withGroups)
+    # Add function to asynchronously update groups list 
+    updateGroupsList = () ->
+      $.getJSON(apiUrl + "clients/" + login.client).done (response) =>
+        # Update login groups and save
+        login.groups = response.groups
+        loginUtils.setLogin(login)
 
-    # Get list of groups from database
-    db.groups.find({ members: login.user }, { fields: { groupname: 1 } }).fetch(withGroups, error)
+    # Always update immediately
+    updateGroupsList()
+
+    ctx = _.extend baseContext, {
+      db: db 
+      imageManager: imageManager
+      auth: auth
+      login: login
+      siteCodesManager: siteCodesManager
+      dataSync: dataSync
+      imageSync: imageSync
+      stop: stop
+      imageAcquirer: imageAcquirer
+      updateGroupsList: updateGroupsList
+    }
+    success(ctx)
